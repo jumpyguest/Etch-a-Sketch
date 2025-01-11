@@ -14,7 +14,6 @@ function formGrid(size) {
             column.appendChild(gridBox);
 
             gridBox.addEventListener("mouseover", () => {
-                // gridBox.classList.add("mouseOverGridBox");
                 if (traceColor === "black") {
                     gridBox.style.backgroundColor = "black";
                 } else {
@@ -43,7 +42,6 @@ resizeBtn.addEventListener("click", () => {
 const blackBtn = document.querySelector("#blackBtn");
 blackBtn.addEventListener("click", () => {
     traceColor = "black";
-    const multiBtn = document.querySelector("#multiColorBtn");
 });
 
 const multiColorBtn = document.querySelector("#multiColorBtn");
@@ -57,7 +55,6 @@ clearBtn.addEventListener("click", () => {
     gridBoxes.forEach((box) => {
         box.style.backgroundColor = "whitesmoke";
     })
-    // gridBox.style.backgroundColor = "whitesmoke";
 });
 
 function clearGrid() {
