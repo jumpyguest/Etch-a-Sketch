@@ -1,26 +1,70 @@
 const container = document.querySelector("#container");
-for (let x = 0; x < 16; x++) {
-    const column = document.createElement("div");
-    column.classList.add("column");
-    column.style = "width: 6.25%";
-    container.appendChild(column);
-    for (let y = 0; y < 16; y++) {
-        const gridBox = document.createElement("div");
-        gridBox.classList.add("gridBox");
-        column.appendChild(gridBox);
+let traceColor = "black";
 
-        gridBox.addEventListener("mouseover", () => {
-            gridBox.classList.add("mouseOverGridBox");
-        });
+function formGrid(size) {
+    for (let x = 0; x < size; x++) {
+        const column = document.createElement("div");
+        column.classList.add("column");
+        column.style = `width: ${100/size}%`;
+        container.appendChild(column);
+        for (let y = 0; y < size; y++) {
+            const gridBox = document.createElement("div");
+            gridBox.classList.add("gridBox");
+            gridBox.style = `height: ${100/size}%`;
+            column.appendChild(gridBox);
+
+            gridBox.addEventListener("mouseover", () => {
+                // gridBox.classList.add("mouseOverGridBox");
+                if (traceColor === "black") {
+                    gridBox.style.backgroundColor = "black";
+                } else {
+                    gridBox.style.backgroundColor = `rgb(${randomColorGen()}, ${randomColorGen()}, ${randomColorGen()})`;
+                }
+            });
+        }
+    }
+
+    function randomColorGen () {
+        return Math.floor(Math.random() * 256);
     }
 }
 
 const resizeBtn = document.querySelector("#resizeBtn");
 resizeBtn.addEventListener("click", () => {
     let size = parseInt(prompt("Enter # of sqaures per side (1-100): "));
-    if (size === NaN || size === 0 || size > 100) {
+    if (isNaN(size) || size === 0 || size > 100) {
         alert("You entered an invalid value!");
     } else {
-        //call function to clear gridbox
+        clearGrid();
+        formGrid(size);
     }
 });
+
+const blackBtn = document.querySelector("#blackBtn");
+blackBtn.addEventListener("click", () => {
+    traceColor = "black";
+    const multiBtn = document.querySelector("#multiColorBtn");
+});
+
+const multiColorBtn = document.querySelector("#multiColorBtn");
+multiColorBtn.addEventListener("click", () => {
+    traceColor = "multi";
+})
+
+const clearBtn = document.querySelector("#clearBtn");
+clearBtn.addEventListener("click", () => {
+    const gridBoxes = document.querySelectorAll(".gridBox");
+    gridBoxes.forEach((box) => {
+        box.style.backgroundColor = "whitesmoke";
+    })
+    // gridBox.style.backgroundColor = "whitesmoke";
+});
+
+function clearGrid() {
+    while (container.hasChildNodes()) {
+        container.removeChild(container.lastChild)
+    }
+}
+
+/** Start with default 16x16 grid */
+formGrid(16);
